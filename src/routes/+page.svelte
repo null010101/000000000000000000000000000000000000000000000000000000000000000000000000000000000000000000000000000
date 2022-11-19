@@ -4,6 +4,11 @@
   import type { PageData } from './$types';
   import '../app.css'
 
+  /*
+  The variable "data" gets the data from './+page.ts'
+  thanks to a Sveltekit feature called page endpoint
+  for more information: https://kit.svelte.dev/docs/routing
+  */
   export let data: PageData
 </script>
 

@@ -1,38 +1,115 @@
-# create-svelte
+# A simple counter
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Hello, welcome to this overstack tech project, here you'll learn how to start a "big" project with Sveltekit, Tailwind, Prisma and Railway.
 
-## Creating a project
+*Creating a "fullstack" project was never so easy.*
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Create the Sveltekit project
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+Open your terminal and go to the path of your choice and run the following commands:
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+> Note: You can use another package manager like npm or yarn
 
 ```bash
-npm run dev
+pnpm create svelte@latest <your project name>
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# After selecting your project configuration
+cd <your project name>
+
+pnpm install
 ```
 
-## Building
+## Add Tailwind to the project
 
-To create a production version of your app:
+In the terminal, and run the following commands:
 
 ```bash
-npm run build
+pnpm install -D tailwindcss postcss autoprefixer svelte-preprocess
+
+pnpx tailwindcss init tailwind.config.cjs -p
 ```
 
-You can preview the production build with `npm run preview`.
+In `svelte.config.js`, put `true` to the `postcss` property in the `preprocess` function:
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```javascript
+import adapter from '@sveltejs/adapter-auto';
+import preprocess from 'svelte-preprocess';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  // Consult https://github.com/sveltejs/svelte-preprocess
+  // for more information about preprocessors
+  preprocess: preprocess({ // here
+    postcss: true 
+  }),
+
+  kit: {
+    adapter: adapter()
+  }
+};
+
+export default config;
+```
+
+In `tailwind.config.cjs`, add the templates paths in the `content` property and the character of your choice in the `separator` property:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  separator: '_', // here
+  // and below
+  content: ['./src/**/*.{html,js,svelte,ts}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Create a `./src/app.css` file and add the Tailwind directives:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* more code below */ 
+```
+
+Create a `./src/routes/+layout.svelte` file and import the the newly-created `app.css` file:
+
+```html
+<script>
+  import "../app.css"
+</script>
+
+<slot />
+```
+
+And run the following command in your terminal:
+
+```bash
+pnpm run dev
+```
+
+## Initialize the database
+
+> Recomendation: Log in with your Github account
+
+Go to [Railway](https://railway.app/) and start a new project, the database.
+
+![Railway page screenshot](/static/railway-screenshot.PNG "Railway home page")
+
+Choose the database provision you want.
+
+![Railway templates screenshot](/static/railway-templates-screenshot.PNG "Railway templates")
+
+Create your tables, and finally, go to the "connect" section and copy the connection URL.
+
+![Railway connect section](/static/railway-database-connect-section.PNG)
+
+## Start with prisma
+
+Go to this [Prisma documentation](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project) and choose the option according to the database you created before.
+
+Follow the guide, and, if you didn't mess with anything, you're ready to start with your project.

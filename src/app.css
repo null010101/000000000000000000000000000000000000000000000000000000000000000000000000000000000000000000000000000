@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+The code below is to enable styles only for devices with screen of 800 px and above.
+
+In this case, isn't used, I always use it for enabling self hosted fonts just for non mobile devices, so mobiles don't have to render the fonts, making faster the page load for mobile devices.
+*/
 @media only screen and (min-width: 800px) 
 {
   
